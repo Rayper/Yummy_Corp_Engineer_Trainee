@@ -14,9 +14,19 @@ export class RoleController {
 
     @Post()
     async create(
-        @Body('name') name: string
+        @Body('name') name: string,
+        @Body('permissions') ids: number[]
     ) {
-        return this.roleService.create({name});
+        // mapping menjadi seperti ini
+        // [1,2]
+        // jadi object seperti ini
+        // [
+        //     {id: 1}, {id: 2}
+        // ]
+        return this.roleService.create({
+            name,
+            permissions: ids.map(id => ({id}))
+        });
     }
 
     @Get(':id')
@@ -27,12 +37,20 @@ export class RoleController {
     @Put(':id')
     async update(
         @Param('id') id: number,
-        @Body('name') name: string
+        @Body('name') name: string,
+        @Body('permissions') ids: number[]
     ) {
         // tunggu data-nya diupdate, setelah itu di return kembali
         await this.roleService.update(id, {name});
 
-        return this.roleService.findOne({id});
+        // dapetin role-nya
+        const role = await this.roleService.findOne({id});
+
+        // copy semua data dari role, jadiin data baru
+        return this.roleService.create({
+            ...role,
+            permissions: ids.map(id => ({id}))
+        });
     }
 
     @Delete(':id')
