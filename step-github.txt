@@ -5,7 +5,8 @@ git branch
 git add .
 git commit
 git push origin videox
-
+git checkout master // pindah branch
+git merge videox
 ============================
 buat repository
 
