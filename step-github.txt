@@ -1,0 +1,18 @@
+Push ke branch baru
+============================
+git checkout -b videox
+git branch
+git add .
+git commit
+git push origin videox
+
+============================
+buat repository
+
+ke source controll
+kalau udah init langsung git add .
+ohh tinggal klik ae kalo blm pernah bikin git
+belom pernah init folder nya, nanti ada button init nya
+terus abis itu di add semua
+abis itu commit pake message
+terus bikin repo nya
