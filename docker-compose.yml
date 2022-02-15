@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  backend:
+    # build dengan titik artinya pake Dockerfilenya
+    build: .
+    # 3000 => port buat container localhost
+    # 8000 => port buat local host
+    ports:
+      - 8000:3000
+    # . => ambil semua file
+    # /app => working directory yang kita buat
+    volumes:
+      - .:/app
+    # execute si db nya dulu
+    depends_on:
+      - db
+
+
+# setting databasenya
+# pakai mysql versi 5.7.22
+# restart-nya always karena image nya terkadang harus selalu di restart
+  db:
+    image: mysql:5.7.22
+    restart: always 
+    environment:
+      MYSQL_DATABASE: admin
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    # volumes : file yang nge-generate dan dimapping ke folder project  
+    # /var/lib/mysql => containernya
+    # dimasukin ke .dbdata
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 33066:3306
